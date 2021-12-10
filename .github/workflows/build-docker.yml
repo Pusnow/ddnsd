@@ -16,7 +16,7 @@ jobs:
 
       - name: Build docker image
         run: |
-          docker build ddnsd --tag ddnsd:latest .
+          docker build --tag ddnsd:latest .
 
       - name: Log into GitHub Container Registry
         run: echo "${{ secrets.CR_PW }}" | docker login https://ghcr.io -u ${{ secrets.CR_ID }} --password-stdin
