@@ -1,0 +1,35 @@
+name: build-docker
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  ddnsd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build docker image
+        run: |
+          docker build --tag ddnsd:latest .
+
+      - name: Log into GitHub Container Registry
+        run: echo "${{ secrets.CR_PW }}" | docker login https://ghcr.io -u ${{ secrets.CR_ID }} --password-stdin
+
+      - name: Push image to GitHub Container Registry
+        run: |
+          docker tag ddnsd:latest ghcr.io/pusnow/ddnsd:latest
+          docker push ghcr.io/pusnow/ddnsd:latest
+
+      - name: Log into Docker Hub
+        run: echo "${{ secrets.DH_PW }}" | docker login -u ${{ secrets.DH_ID }} --password-stdin
+
+      - name: Push image to Docker Hub
+        run: |
+          docker tag ddnsd:latest pusnow/ddnsd:latest
+          docker push pusnow/ddnsd:latest
