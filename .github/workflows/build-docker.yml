@@ -1,0 +1,34 @@
+name: build-docker
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * 0"
+
+jobs:
+  stage1:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build stage1 image
+        run: |
+          docker build ddnsd --tag ddnsd:latest
+
+      - name: Log into GitHub Container Registry
+        run: echo "${{ secrets.CR_PW }}" | docker login https://ghcr.io -u ${{ secrets.CR_ID }} --password-stdin
+
+      - name: Push image to GitHub Container Registry
+        run: |
+          docker tag ddnsd:latest ghcr.io/$CR_ID/ddnsd:latest
+          docker push ghcr.io/$CR_ID/ddnsd:latest
+
+      - name: Log into Docker Hub
+        run: echo "${{ secrets.DH_PW }}" | docker login -u ${{ secrets.DH_ID }} --password-stdin
+
+      - name: Push image to Docker Hub
+        run: |
+          docker tag ddnsd:latest $DH_ID/ddnsd:latest
+          docker push $DH_ID/ddnsd:latest
