@@ -1,0 +1,14 @@
+[package]
+name = "ddnsd"
+version = "0.1.0"
+edition = "2021"
+
+authors = ["Wonsup Yoon <wonsup@pusnow.com>"]
+description = "Simple ddns daemon"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+reqwest = { version = "0.11", features = ["blocking", "json"] }
+serde = { version = "1.0.131", features = ["derive"] }
+clap = "2.34.0"
