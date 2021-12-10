@@ -9,14 +9,14 @@ on:
     - cron: "0 0 * * 0"
 
 jobs:
-  stage1:
+  ddnsd:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
-      - name: Build stage1 image
+      - name: Build docker image
         run: |
-          docker build ddnsd --tag ddnsd:latest
+          docker build ddnsd --tag ddnsd:latest .
 
       - name: Log into GitHub Container Registry
         run: echo "${{ secrets.CR_PW }}" | docker login https://ghcr.io -u ${{ secrets.CR_ID }} --password-stdin
