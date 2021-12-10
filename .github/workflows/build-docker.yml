@@ -23,13 +23,13 @@ jobs:
 
       - name: Push image to GitHub Container Registry
         run: |
-          docker tag ddnsd:latest ghcr.io/$CR_ID/ddnsd:latest
-          docker push ghcr.io/$CR_ID/ddnsd:latest
+          docker tag ddnsd:latest ghcr.io/pusnow/ddnsd:latest
+          docker push ghcr.io/pusnow/ddnsd:latest
 
       - name: Log into Docker Hub
         run: echo "${{ secrets.DH_PW }}" | docker login -u ${{ secrets.DH_ID }} --password-stdin
 
       - name: Push image to Docker Hub
         run: |
-          docker tag ddnsd:latest $DH_ID/ddnsd:latest
-          docker push $DH_ID/ddnsd:latest
+          docker tag ddnsd:latest pusnow/ddnsd:latest
+          docker push pusnow/ddnsd:latest
