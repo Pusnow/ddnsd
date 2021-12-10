@@ -5,6 +5,8 @@ edition = "2021"
 
 authors = ["Wonsup Yoon <wonsup@pusnow.com>"]
 description = "Simple ddns daemon"
+license = "MIT"
+homepage = "https://github.com/Pusnow/ddnsd"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
