@@ -85,7 +85,8 @@ fn main() -> Result<(), Error> {
     let sub = matches.value_of("sub").unwrap();
     let apex = matches.value_of("apex").unwrap();
     env_logger::init();
-
+    info!("provider: {}", provider);
+    info!("duration: {}", duration);
     info!("sub: {}", sub);
     info!("apex: {}", apex);
 
