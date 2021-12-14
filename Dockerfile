@@ -21,4 +21,5 @@ RUN apt-get update && apt-get install -y \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 WORKDIR /app
+ENV RUST_LOG=info
 CMD ["/app/ddnsd"]
