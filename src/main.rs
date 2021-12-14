@@ -95,9 +95,8 @@ fn main() -> Result<(), Error> {
     info!("DDNSD started");
     loop {
         let ip_current = checkip::check_ip()?;
-        info!("Current IP: {}", ip_current);
+        info!("Current IP: {} Previous IP: {:?}", ip_current, ip_prev);
         if ip_prev != Some(ip_current) {
-            info!("Prev IP: {:?}", ip_prev);
             info!("Update DDNS IP to {}", ip_current);
             provider::update(&provider, key, &ip_current, sub, apex)?;
         }
