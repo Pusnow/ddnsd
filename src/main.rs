@@ -2,6 +2,8 @@ use clap::{value_t_or_exit, App, Arg};
 use std::thread::sleep;
 use std::time::Duration;
 
+use log::info;
+
 mod checkip;
 mod provider;
 
@@ -82,10 +84,20 @@ fn main() -> Result<(), Error> {
     let key = matches.value_of("key").unwrap();
     let sub = matches.value_of("sub").unwrap();
     let apex = matches.value_of("apex").unwrap();
+    env_logger::init();
+
+    info!("sub: {}", sub);
+    info!("apex: {}", apex);
+
     let mut ip_prev = None;
+
+    info!("DDNSD started");
     loop {
         let ip_current = checkip::check_ip()?;
+        info!("Current IP: {}", ip_current);
         if ip_prev != Some(ip_current) {
+            info!("Prev IP: {:?}", ip_prev);
+            info!("Update DDNS IP to {}", ip_current);
             provider::update(&provider, key, &ip_current, sub, apex)?;
         }
         ip_prev = Some(ip_current);
