@@ -30,6 +30,16 @@ fn main() -> Result<(), Error> {
         .author(env!("CARGO_PKG_AUTHORS"))
         .about(env!("CARGO_PKG_DESCRIPTION"))
         .arg(
+            Arg::with_name("interface")
+                .short("i")
+                .long("interface")
+                .required(false)
+                .takes_value(true)
+                .case_insensitive(true)
+                .env("DDNSD_INTERFACE")
+                .help("Interface name or checkip"),
+        )
+        .arg(
             Arg::with_name("provider")
                 .short("p")
                 .long("provider")
