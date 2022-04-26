@@ -1,3 +1,4 @@
+pub mod cloudflare;
 pub mod digitaloceon;
 use clap::arg_enum;
 use std::net::IpAddr;
@@ -6,6 +7,7 @@ arg_enum! {
     #[derive(PartialEq, Debug)]
     pub enum Provider {
         DigitalOceon,
+        Cloudflare,
     }
 }
 
@@ -25,5 +27,6 @@ pub fn update(
 ) -> Result<IpAddr, crate::Error> {
     match provider {
         Provider::DigitalOceon => digitaloceon::update(api_key, ip, sub_domain, apex_domain),
+        Provider::Cloudflare => cloudflare::update(api_key, ip, sub_domain, apex_domain),
     }
 }

@@ -11,6 +11,8 @@ mod provider;
 pub enum Error {
     Request(reqwest::Error),
     Parse(std::net::AddrParseError),
+    ApiError,
+    Unavailable,
 }
 impl From<reqwest::Error> for Error {
     fn from(s: reqwest::Error) -> Error {
