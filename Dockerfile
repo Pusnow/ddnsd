@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN groupadd ddnsd && useradd -g ddnsd ddnsd && chmod -R 755 /app
+RUN groupadd -g 10001 ddnsd && useradd -u 10000 -g ddnsd ddnsd && chmod -R 755 /app
 
 WORKDIR /app
 ENV RUST_LOG=info
