@@ -1,5 +1,5 @@
 use clap::{value_t_or_exit, App, Arg};
-use std::thread::sleep;
+use std::sync::mpsc::{channel, RecvTimeoutError};
 use std::time::Duration;
 
 use log::info;
@@ -94,6 +94,15 @@ fn main() -> Result<(), Error> {
 
     let mut ip_prev = None;
 
+    let (ctrlc_tx, ctrlc_rx) = channel();
+
+    ctrlc::set_handler(move || {
+        ctrlc_tx
+            .send(())
+            .expect("Could not send signal on channel.")
+    })
+    .expect("Error setting Ctrl-C handler");
+
     info!("DDNSD started");
     loop {
         let ip_current = checkip::check_ip()?;
@@ -103,6 +112,18 @@ fn main() -> Result<(), Error> {
             provider::update(&provider, key, &ip_current, sub, apex)?;
         }
         ip_prev = Some(ip_current);
-        sleep(Duration::from_secs(duration));
+
+        match ctrlc_rx.recv_timeout(Duration::from_secs(duration)) {
+            Ok(_) => {
+                info!("Signal received. Terminating...");
+                break;
+            }
+            Err(RecvTimeoutError::Timeout) => {}
+            Err(RecvTimeoutError::Disconnected) => {
+                info!("Signal handling error. Terminating...");
+                break;
+            }
+        }
     }
+    Ok(())
 }
