@@ -33,7 +33,7 @@ fn main() -> Result<(), Error> {
         .about(env!("CARGO_PKG_DESCRIPTION"))
         .arg(
             Arg::with_name("provider")
-                .short("p")
+                .short('p')
                 .long("provider")
                 .required(true)
                 .takes_value(true)
@@ -44,7 +44,7 @@ fn main() -> Result<(), Error> {
         )
         .arg(
             Arg::with_name("key")
-                .short("k")
+                .short('k')
                 .long("key")
                 .required(true)
                 .takes_value(true)
@@ -53,7 +53,7 @@ fn main() -> Result<(), Error> {
         )
         .arg(
             Arg::with_name("duration")
-                .short("d")
+                .short('d')
                 .long("duration")
                 .default_value("600")
                 .takes_value(true)
@@ -62,7 +62,7 @@ fn main() -> Result<(), Error> {
         )
         .arg(
             Arg::with_name("sub")
-                .short("s")
+                .short('s')
                 .long("sub")
                 .required(true)
                 .takes_value(true)
@@ -71,7 +71,7 @@ fn main() -> Result<(), Error> {
         )
         .arg(
             Arg::with_name("apex")
-                .short("a")
+                .short('a')
                 .long("apex")
                 .required(true)
                 .takes_value(true)
