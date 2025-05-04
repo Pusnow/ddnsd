@@ -33,4 +33,3 @@ jobs:
         run: |
           docker tag ddnsd:latest pusnow/ddnsd:latest
           docker push pusnow/ddnsd:latest
-      - uses: gautamkrishnar/keepalive-workflow@v1
